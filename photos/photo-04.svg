@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-label="Тихий разговор после встречи">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFE7C2"/>
+      <stop offset=".5" stop-color="#8FC7B3"/>
+      <stop offset="1" stop-color="#89B6D6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg)"/>
+  <path d="M0 970c180 65 350 75 540 6 210-77 410-58 660 70v454H0z" fill="#fffdf8" opacity=".68"/>
+  <g opacity=".76">
+    <rect x="230" y="445" width="740" height="420" rx="120" fill="#fffdf8"/>
+    <circle cx="415" cy="665" r="58" fill="#E86655"/>
+    <circle cx="600" cy="665" r="58" fill="#F2C866"/>
+    <circle cx="785" cy="665" r="58" fill="#89B6D6"/>
+  </g>
+  <path d="M445 860l-120 190 265-150z" fill="#fffdf8" opacity=".76"/>
+</svg>

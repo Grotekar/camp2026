@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-label="Общее фото команды и участников">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="1" x2="1" y2="0">
+      <stop stop-color="#FFF3E2"/>
+      <stop offset=".46" stop-color="#89B6D6"/>
+      <stop offset="1" stop-color="#E86655"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg)"/>
+  <rect x="120" y="210" width="960" height="1010" rx="120" fill="#fffdf8" opacity=".26"/>
+  <g fill="#fffdf8" opacity=".88">
+    <circle cx="270" cy="570" r="58"/><circle cx="430" cy="520" r="66"/><circle cx="600" cy="500" r="76"/><circle cx="775" cy="520" r="66"/><circle cx="930" cy="575" r="58"/>
+    <path d="M180 820c38-145 150-166 215 0z"/><path d="M330 835c50-185 210-205 285 0z"/><path d="M485 850c70-225 260-225 330 0z"/><path d="M660 835c55-185 220-205 292 0z"/><path d="M815 820c42-145 160-166 222 0z"/>
+    <circle cx="350" cy="865" r="54"/><circle cx="520" cy="880" r="62"/><circle cx="690" cy="878" r="62"/><circle cx="855" cy="862" r="54"/>
+    <path d="M250 1110c45-150 155-170 220 0z"/><path d="M420 1130c55-185 210-200 285 0z"/><path d="M600 1130c55-185 210-200 285 0z"/><path d="M760 1110c45-150 155-170 220 0z"/>
+  </g>
+</svg>

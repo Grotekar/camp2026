@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-label="Тёплая заглушка фотографии смены">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F7A36F"/>
+      <stop offset=".48" stop-color="#E86655"/>
+      <stop offset="1" stop-color="#89B6D6"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="28"/></filter>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg)"/>
+  <circle cx="230" cy="250" r="180" fill="#F2C866" opacity=".55" filter="url(#blur)"/>
+  <circle cx="970" cy="310" r="250" fill="#8FC7B3" opacity=".42" filter="url(#blur)"/>
+  <path d="M0 1030c170-110 320-98 490 0s345 120 710-18v488H0z" fill="#FFF9F1" opacity=".72"/>
+  <g fill="#fffdf8" opacity=".9">
+    <circle cx="420" cy="735" r="74"/>
+    <circle cx="605" cy="710" r="86"/>
+    <circle cx="790" cy="744" r="72"/>
+    <path d="M275 1015c45-170 245-178 292 0z"/>
+    <path d="M438 1030c60-210 275-215 340 0z"/>
+    <path d="M670 1018c48-168 245-170 294 0z"/>
+  </g>
+</svg>

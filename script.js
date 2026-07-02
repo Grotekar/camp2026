@@ -1,0 +1,127 @@
+// Главные настройки сайта:
+// 1. Здесь замените ссылку на архив Яндекс Диска.
+// 2. Здесь же замените список избранных фотографий из папки photos/.
+const SITE_CONFIG = {
+  diskUrl: "https://disk.yandex.ru/i/PASTE-YOUR-LINK-HERE",
+  photos: [
+    { src: "photos/photo-01.svg", alt: "Участники смены на вечерней программе", caption: "Вечерняя программа" },
+    { src: "photos/photo-02.svg", alt: "Командная игра на улице", caption: "Командные игры" },
+    { src: "photos/photo-03.svg", alt: "Общее фото команды и участников", caption: "Все вместе" },
+    { src: "photos/photo-04.svg", alt: "Тихий разговор после встречи", caption: "Разговоры без спешки" },
+    { src: "photos/photo-05.svg", alt: "Друзья улыбаются на смене", caption: "Новые друзья" },
+    { src: "photos/photo-06.svg", alt: "Финальный день смены", caption: "Финальный день" }
+  ]
+};
+
+const slidesRoot = document.querySelector("#gallerySlides");
+const diskLinks = document.querySelectorAll(".js-disk-link");
+const lightbox = document.querySelector("#lightbox");
+const lightboxImage = document.querySelector("#lightboxImage");
+const lightboxCaption = document.querySelector("#lightboxCaption");
+const lightboxClose = document.querySelector(".lightbox-close");
+
+function applyDiskLinks() {
+  diskLinks.forEach((link) => {
+    link.href = SITE_CONFIG.diskUrl;
+  });
+}
+
+function photoTemplate(photo, index) {
+  const slide = document.createElement("div");
+  slide.className = "swiper-slide";
+
+  const button = document.createElement("button");
+  button.className = "photo-card";
+  button.type = "button";
+  button.setAttribute("aria-label", `Открыть фото: ${photo.caption}`);
+  button.addEventListener("click", () => openLightbox(photo));
+
+  const image = document.createElement("img");
+  image.src = photo.src;
+  image.alt = photo.alt;
+  image.loading = index < 2 ? "eager" : "lazy";
+
+  const caption = document.createElement("div");
+  caption.className = "photo-caption";
+  caption.textContent = photo.caption;
+
+  button.append(image, caption);
+  slide.append(button);
+  return slide;
+}
+
+function renderGallery() {
+  const photos = SITE_CONFIG.photos.filter((photo) => photo.src);
+  const list = photos.length ? photos : [
+    {
+      src: "photos/photo-01.svg",
+      alt: "Фотография скоро появится",
+      caption: "Фотографии скоро появятся"
+    }
+  ];
+
+  slidesRoot.replaceChildren(...list.map(photoTemplate));
+
+  if (typeof Swiper !== "function") {
+    document.querySelector(".gallery-prev").hidden = true;
+    document.querySelector(".gallery-next").hidden = true;
+    return;
+  }
+
+  const canLoop = list.length > 3;
+  new Swiper(".gallery-swiper", {
+    slidesPerView: 1.08,
+    spaceBetween: 14,
+    loop: canLoop,
+    centeredSlides: list.length === 1,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true
+    },
+    navigation: {
+      nextEl: ".gallery-next",
+      prevEl: ".gallery-prev"
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: Math.min(2, list.length),
+        spaceBetween: 18
+      },
+      980: {
+        slidesPerView: Math.min(3, list.length),
+        spaceBetween: 22
+      }
+    }
+  });
+}
+
+function openLightbox(photo) {
+  lightboxImage.src = photo.src;
+  lightboxImage.alt = photo.alt;
+  lightboxCaption.textContent = photo.caption;
+
+  if (typeof lightbox.showModal === "function") {
+    lightbox.showModal();
+  }
+}
+
+function closeLightbox() {
+  lightbox.close();
+  lightboxImage.src = "";
+}
+
+lightboxClose.addEventListener("click", closeLightbox);
+lightbox.addEventListener("click", (event) => {
+  if (event.target === lightbox) {
+    closeLightbox();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && lightbox.open) {
+    closeLightbox();
+  }
+});
+
+applyDiskLinks();
+renderGallery();

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-label="Командная игра на улице">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#8FC7B3"/>
+      <stop offset=".55" stop-color="#F2C866"/>
+      <stop offset="1" stop-color="#F49C84"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#bg)"/>
+  <circle cx="930" cy="210" r="130" fill="#fffdf8" opacity=".62"/>
+  <path d="M0 890c210-120 390-150 610-42 218 108 354 85 590-12v664H0z" fill="#fff9f1" opacity=".72"/>
+  <g fill="#25201f" opacity=".2">
+    <circle cx="265" cy="770" r="62"/>
+    <circle cx="485" cy="715" r="72"/>
+    <circle cx="735" cy="735" r="68"/>
+    <circle cx="950" cy="780" r="58"/>
+    <path d="M175 1018c36-144 162-178 238-70 29 41 43 85 50 132H150z"/>
+    <path d="M380 1010c60-190 255-205 330 0z"/>
+    <path d="M640 1038c50-170 226-184 304 0z"/>
+    <path d="M850 1030c48-146 185-165 270 0z"/>
+  </g>
+</svg>
