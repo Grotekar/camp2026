@@ -1,6 +1,4 @@
-// Главные настройки сайта:
-// 1. Здесь замените ссылку на архив Яндекс Диска.
-// 2. Здесь же замените список избранных фотографий из папки photos/.
+// Меняйте здесь ссылку на архив и список избранных фотографий из папки photos/.
 const SITE_CONFIG = {
   diskUrl: "https://disk.yandex.ru/i/PASTE-YOUR-LINK-HERE",
   photos: [
@@ -68,12 +66,11 @@ function renderGallery() {
     return;
   }
 
-  const canLoop = list.length > 3;
   new Swiper(".gallery-swiper", {
-    slidesPerView: 1.08,
+    slidesPerView: 1,
     spaceBetween: 14,
-    loop: canLoop,
-    centeredSlides: list.length === 1,
+    loop: false,
+    watchOverflow: true,
     pagination: {
       el: ".swiper-pagination",
       clickable: true
@@ -83,13 +80,13 @@ function renderGallery() {
       prevEl: ".gallery-prev"
     },
     breakpoints: {
-      640: {
+      768: {
         slidesPerView: Math.min(2, list.length),
         spaceBetween: 18
       },
-      980: {
+      1024: {
         slidesPerView: Math.min(3, list.length),
-        spaceBetween: 22
+        spaceBetween: 20
       }
     }
   });
