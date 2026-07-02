@@ -1,6 +1,7 @@
-// Меняйте здесь ссылку на архив и список избранных фотографий из папки photos/.
+// Меняйте здесь список избранных фотографий из папки photos/.
+// Ссылка на Яндекс Диск берётся из необязательного файла config.js.
 const SITE_CONFIG = {
-  diskUrl: "https://disk.yandex.ru/i/PASTE-YOUR-LINK-HERE",
+  diskUrl: window.LANDING_CONFIG?.diskUrl || "",
   photos: [
     { src: "photos/photo-01.svg", alt: "Участники смены на вечерней программе", caption: "Вечерняя программа" },
     { src: "photos/photo-02.svg", alt: "Командная игра на улице", caption: "Командные игры" },
@@ -19,8 +20,20 @@ const lightboxCaption = document.querySelector("#lightboxCaption");
 const lightboxClose = document.querySelector(".lightbox-close");
 
 function applyDiskLinks() {
+  const hasDiskUrl = SITE_CONFIG.diskUrl.startsWith("http");
+
   diskLinks.forEach((link) => {
-    link.href = SITE_CONFIG.diskUrl;
+    if (hasDiskUrl) {
+      link.href = SITE_CONFIG.diskUrl;
+      link.removeAttribute("aria-disabled");
+      link.removeAttribute("title");
+      return;
+    }
+
+    link.href = "#";
+    link.setAttribute("aria-disabled", "true");
+    link.title = "Добавьте ссылку на Яндекс Диск в config.js";
+    link.addEventListener("click", (event) => event.preventDefault());
   });
 }
 

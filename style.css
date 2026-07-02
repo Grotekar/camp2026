@@ -226,6 +226,12 @@ h3 {
   box-shadow: 0 14px 28px rgba(170, 70, 48, 0.24);
 }
 
+.js-disk-link[aria-disabled="true"] {
+  cursor: not-allowed;
+  filter: grayscale(0.25);
+  opacity: 0.72;
+}
+
 .button-ghost {
   border: 1px solid rgba(255, 255, 255, 0.34);
   background: rgba(255, 255, 255, 0.12);
