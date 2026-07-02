@@ -37,9 +37,11 @@ jobs:
             fs.copyFileSync(file, `dist/${file}`);
           }
           fs.cpSync('photos', 'dist/photos', { recursive: true });
+          const lockValue = String(process.env.SITE_LOCKED || 'true').trim().toLowerCase();
+          const unlockedValues = new Set(['false', '0', 'no', 'off', 'open']);
           const config = {
             diskUrl: process.env.YANDEX_DISK_URL || '',
-            isLocked: process.env.SITE_LOCKED !== 'false',
+            isLocked: !unlockedValues.has(lockValue),
             lockTitle: process.env.LOCK_TITLE || 'Страница скоро откроется',
             lockText: process.env.LOCK_TEXT || 'Фотографии ещё готовятся к публикации. Сохраните ссылку и загляните сюда немного позже.',
             lockNote: process.env.LOCK_NOTE || 'Спасибо за терпение'

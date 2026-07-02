@@ -2,9 +2,19 @@
 // Ссылка на Яндекс Диск и временная заглушка настраиваются в config.js.
 const RUNTIME_CONFIG = window.LANDING_CONFIG || {};
 
+function shouldLockPage(value) {
+  if (value === false) return false;
+  if (value === true) return true;
+  if (typeof value === "string") {
+    return !["false", "0", "no", "off", "open"].includes(value.trim().toLowerCase());
+  }
+
+  return true;
+}
+
 const SITE_CONFIG = {
   diskUrl: RUNTIME_CONFIG.diskUrl || "",
-  isLocked: RUNTIME_CONFIG.isLocked !== false,
+  isLocked: shouldLockPage(RUNTIME_CONFIG.isLocked),
   lockTitle: RUNTIME_CONFIG.lockTitle || "Страница скоро откроется",
   lockText: RUNTIME_CONFIG.lockText || "Фотографии ещё готовятся к публикации. Сохраните ссылку и загляните сюда немного позже.",
   lockNote: RUNTIME_CONFIG.lockNote || "Спасибо за терпение",

@@ -66,18 +66,113 @@ isLocked: false
 
 ## Деплой на GitHub Pages
 
-В проект добавлен workflow `.github/workflows/pages.yml`, поэтому лучше использовать деплой через GitHub Actions.
+В проекте уже есть готовый workflow `.github/workflows/pages.yml`. Он сам собирает файлы, создаёт `config.js` и публикует сайт на GitHub Pages.
 
-1. Загрузите проект в GitHub-репозиторий.
-2. В репозитории откройте **Settings** -> **Pages**.
-3. В блоке **Build and deployment** выберите **Source: GitHub Actions**.
-4. Откройте **Settings** -> **Secrets and variables** -> **Actions**.
-5. Во вкладке **Secrets** добавьте `YANDEX_DISK_URL` со ссылкой на Яндекс Диск.
-6. Во вкладке **Variables** добавьте `SITE_LOCKED`.
-7. Пока сайт нужно скрывать, поставьте `SITE_LOCKED` равным `true`.
-8. Когда сайт можно открыть, поменяйте `SITE_LOCKED` на `false` и заново запустите workflow **Deploy GitHub Pages** во вкладке **Actions**.
+### Что выбрать на странице Pages
 
-Дополнительные переменные для текста заглушки:
+Откройте **Settings** -> **Pages**.
+
+В блоке **Build and deployment** должно быть:
+
+```text
+Source: GitHub Actions
+```
+
+Если вы видите карточки **GitHub Pages Jekyll** и **Static HTML**, нажимать **Configure** на них не нужно. Это просто предложенные шаблоны GitHub. Наш workflow уже лежит в репозитории, поэтому деплой запускается из вкладки **Actions**.
+
+Если сверху написано **Your site is live at ...**, значит GitHub Pages уже включён.
+
+Для экрана как на скриншоте:
+
+1. `Source: GitHub Actions` уже выбран правильно.
+2. Карточки **GitHub Pages Jekyll** и **Static HTML** пропускаем.
+3. Нажимать нужно не **Configure**, а вкладку **Actions** в верхнем меню репозитория, когда понадобится запустить деплой заново.
+4. Для ссылки и заглушки идём в левом меню в **Secrets and variables**.
+
+### Настроить ссылку и заглушку
+
+Откройте **Settings** -> **Secrets and variables** -> **Actions**.
+
+Во вкладке **Secrets** добавьте:
+
+```text
+YANDEX_DISK_URL
+```
+
+Значение: ссылка на Яндекс Диск.
+
+Во вкладке **Variables** добавьте:
+
+```text
+SITE_LOCKED
+```
+
+Значение:
+
+```text
+true
+```
+
+Пока `SITE_LOCKED=true`, посетители видят только экран “Страница скоро откроется”.
+
+Когда фотографии готовы, поменяйте значение на:
+
+```text
+false
+```
+
+После изменения secret или variable нужно заново запустить деплой:
+
+1. Откройте вкладку **Actions**.
+2. Выберите workflow **Deploy GitHub Pages**.
+3. Нажмите **Run workflow**.
+4. Дождитесь зелёной галочки.
+5. Вернитесь в **Settings** -> **Pages** и откройте ссылку из блока **Your site is live at ...**.
+
+Если после `SITE_LOCKED=false` заглушка всё ещё видна:
+
+1. Убедитесь, что workflow был заново запущен после изменения variable.
+2. Откройте опубликованный файл `config.js` в браузере:
+
+```text
+https://ВАШ-ЛОГИН.github.io/ВАШ-РЕПОЗИТОРИЙ/config.js
+```
+
+Для вашего текущего адреса это будет примерно:
+
+```text
+https://grotekar.github.io/camp2026/config.js
+```
+
+Внутри должно быть:
+
+```js
+"isLocked": false
+```
+
+Если там `"isLocked": true`, значит GitHub Pages показывает старый деплой или workflow запускался до изменения `SITE_LOCKED`.
+
+### Короткая проверка
+
+Если сайт должен быть закрыт:
+
+```text
+SITE_LOCKED=true
+```
+
+Ожидаемый результат: по ссылке GitHub Pages виден только баннер-заглушка.
+
+Если сайт должен быть открыт:
+
+```text
+SITE_LOCKED=false
+```
+
+Ожидаемый результат: по ссылке GitHub Pages виден полноценный лендинг, а кнопки ведут на Яндекс Диск.
+
+### Тексты заглушки
+
+Дополнительные variables для текста заглушки:
 
 ```text
 LOCK_TITLE
