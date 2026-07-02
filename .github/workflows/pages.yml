@@ -46,16 +46,7 @@ jobs:
             lockText: process.env.LOCK_TEXT || 'Фотографии ещё готовятся к публикации. Сохраните ссылку и загляните сюда немного позже.',
             lockNote: process.env.LOCK_NOTE || 'Спасибо за терпение'
           };
-          const deployInfo = {
-            workflow: 'Deploy GitHub Pages',
-            generatedAt: new Date().toISOString(),
-            siteLockedVariable: process.env.SITE_LOCKED || '',
-            isLocked: config.isLocked,
-            hasDiskUrl: Boolean(process.env.YANDEX_DISK_URL)
-          };
           fs.writeFileSync('dist/config.js', `window.LANDING_CONFIG = ${JSON.stringify(config, null, 2)};\n`);
-          fs.writeFileSync('dist/deploy-info.json', `${JSON.stringify(deployInfo, null, 2)}\n`);
-          console.log('Prepared files:', fs.readdirSync('dist').join(', '));
           NODE
         env:
           YANDEX_DISK_URL: ${{ secrets.YANDEX_DISK_URL }}
