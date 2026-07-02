@@ -1,0 +1,63 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare static files
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          fs.rmSync('dist', { recursive: true, force: true });
+          fs.mkdirSync('dist', { recursive: true });
+          for (const file of ['index.html', 'style.css', 'script.js']) {
+            fs.copyFileSync(file, `dist/${file}`);
+          }
+          fs.cpSync('photos', 'dist/photos', { recursive: true });
+          const config = {
+            diskUrl: process.env.YANDEX_DISK_URL || '',
+            isLocked: process.env.SITE_LOCKED !== 'false',
+            lockTitle: process.env.LOCK_TITLE || 'Страница скоро откроется',
+            lockText: process.env.LOCK_TEXT || 'Фотографии ещё готовятся к публикации. Сохраните ссылку и загляните сюда немного позже.',
+            lockNote: process.env.LOCK_NOTE || 'Спасибо за терпение'
+          };
+          fs.writeFileSync('dist/config.js', `window.LANDING_CONFIG = ${JSON.stringify(config, null, 2)};\n`);
+          NODE
+        env:
+          YANDEX_DISK_URL: ${{ secrets.YANDEX_DISK_URL }}
+          SITE_LOCKED: ${{ vars.SITE_LOCKED }}
+          LOCK_TITLE: ${{ vars.LOCK_TITLE }}
+          LOCK_TEXT: ${{ vars.LOCK_TEXT }}
+          LOCK_NOTE: ${{ vars.LOCK_NOTE }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "dist"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

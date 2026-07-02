@@ -1,6 +1,13 @@
-// Меняйте здесь ссылку на архив и список избранных фотографий из папки photos/.
+// Меняйте здесь список избранных фотографий из папки photos/.
+// Ссылка на Яндекс Диск и временная заглушка настраиваются в config.js.
+const RUNTIME_CONFIG = window.LANDING_CONFIG || {};
+
 const SITE_CONFIG = {
-  diskUrl: "https://disk.yandex.ru/i/PASTE-YOUR-LINK-HERE",
+  diskUrl: RUNTIME_CONFIG.diskUrl || "",
+  isLocked: RUNTIME_CONFIG.isLocked !== false,
+  lockTitle: RUNTIME_CONFIG.lockTitle || "Страница скоро откроется",
+  lockText: RUNTIME_CONFIG.lockText || "Фотографии ещё готовятся к публикации. Сохраните ссылку и загляните сюда немного позже.",
+  lockNote: RUNTIME_CONFIG.lockNote || "Спасибо за терпение",
   photos: [
     { src: "photos/photo-01.svg", alt: "Участники смены на вечерней программе", caption: "Вечерняя программа" },
     { src: "photos/photo-02.svg", alt: "Командная игра на улице", caption: "Командные игры" },
@@ -18,9 +25,41 @@ const lightboxImage = document.querySelector("#lightboxImage");
 const lightboxCaption = document.querySelector("#lightboxCaption");
 const lightboxClose = document.querySelector(".lightbox-close");
 
+function applySiteLock() {
+  if (!SITE_CONFIG.isLocked) {
+    document.body.classList.remove("is-locked");
+    return;
+  }
+
+  const overlay = document.createElement("section");
+  overlay.className = "site-lock";
+  overlay.setAttribute("aria-labelledby", "siteLockTitle");
+  overlay.innerHTML = `
+    <div class="site-lock-panel">
+      <p>${SITE_CONFIG.lockNote}</p>
+      <h1 id="siteLockTitle">${SITE_CONFIG.lockTitle}</h1>
+      <span>${SITE_CONFIG.lockText}</span>
+    </div>
+  `;
+
+  document.body.append(overlay);
+}
+
 function applyDiskLinks() {
+  const hasDiskUrl = SITE_CONFIG.diskUrl.startsWith("http");
+
   diskLinks.forEach((link) => {
-    link.href = SITE_CONFIG.diskUrl;
+    if (hasDiskUrl) {
+      link.href = SITE_CONFIG.diskUrl;
+      link.removeAttribute("aria-disabled");
+      link.removeAttribute("title");
+      return;
+    }
+
+    link.href = "#";
+    link.setAttribute("aria-disabled", "true");
+    link.title = "Добавьте ссылку на Яндекс Диск в config.js";
+    link.addEventListener("click", (event) => event.preventDefault());
   });
 }
 
@@ -120,5 +159,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+applySiteLock();
 applyDiskLinks();
 renderGallery();
