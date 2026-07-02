@@ -1,7 +1,7 @@
 // Меняйте здесь список избранных фотографий из папки photos/.
 // Ссылка на Яндекс Диск берётся из необязательного файла config.js.
 const SITE_CONFIG = {
-  diskUrl: window.LANDING_CONFIG?.diskUrl || "",
+  diskUrl: "https://disk.yandex.ru/i/PASTE-YOUR-LINK-HERE",
   photos: [
     { src: "photos/photo-01.svg", alt: "Участники смены на вечерней программе", caption: "Вечерняя программа" },
     { src: "photos/photo-02.svg", alt: "Командная игра на улице", caption: "Командные игры" },
