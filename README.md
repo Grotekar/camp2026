@@ -132,7 +132,26 @@ false
 Если после `SITE_LOCKED=false` заглушка всё ещё видна:
 
 1. Убедитесь, что workflow был заново запущен после изменения variable.
-2. Откройте опубликованный файл `config.js` в браузере:
+2. Откройте опубликованный файл `deploy-info.json` в браузере:
+
+```text
+https://ВАШ-ЛОГИН.github.io/ВАШ-РЕПОЗИТОРИЙ/deploy-info.json
+```
+
+Для вашего текущего адреса:
+
+```text
+https://grotekar.github.io/camp2026/deploy-info.json
+```
+
+Там должно быть:
+
+```json
+"workflow": "Deploy GitHub Pages",
+"isLocked": false
+```
+
+3. Откройте опубликованный файл `config.js` в браузере:
 
 ```text
 https://ВАШ-ЛОГИН.github.io/ВАШ-РЕПОЗИТОРИЙ/config.js
@@ -151,6 +170,14 @@ https://grotekar.github.io/camp2026/config.js
 ```
 
 Если там `"isLocked": true`, значит GitHub Pages показывает старый деплой или workflow запускался до изменения `SITE_LOCKED`.
+
+Если `config.js` или `deploy-info.json` открывается как **404 Not Found**, значит опубликована не сборка из workflow `.github/workflows/pages.yml`. Проверьте:
+
+1. Файл `.github/workflows/pages.yml` загружен в GitHub-репозиторий в ветку `main`.
+2. В **Settings** -> **Pages** выбран **Source: GitHub Actions**.
+3. Во вкладке **Actions** есть workflow **Deploy GitHub Pages**, а не только стандартный **pages build and deployment**.
+4. Последний запуск **Deploy GitHub Pages** завершился зелёной галочкой.
+5. В логе шага **Prepare static files** есть строка `Prepared files:` и среди файлов перечислен `config.js`.
 
 ### Короткая проверка
 
